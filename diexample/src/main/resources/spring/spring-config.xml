@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="kharoud.springframework.di"></context:component-scan>
+
+
+    <bean id="greetingController" class="kharoud.springframework.di.controllers.GreetingController">
+
+    </bean>
+
+
+    <bean id="helloWorldFactory" class="kharoud.springframework.di.services.HelloWorldFactory"/>
+
+    <bean id="french" factory-bean="helloWorldFactory" factory-method="createHelloWorldService">
+        <constructor-arg value="fr"></constructor-arg>
+    </bean>
+
+    <bean id="helloWorldServiceHindhi" factory-bean="helloWorldFactory" factory-method="createHelloWorldService" primary="true">
+        <constructor-arg value="hi"></constructor-arg>
+    </bean>
+
+    <beans profile="english">
+        <bean id="helloWorldServiceDefault" factory-bean="helloWorldFactory" factory-method="createHelloWorldService" primary="true">
+            <constructor-arg value="en"></constructor-arg>
+        </bean>
+
+    </beans>
+
+    <beans profile="Punjabi">
+        <bean id="helloWorldServiceDefault" factory-bean="helloWorldFactory" factory-method="createHelloWorldService" primary="true">
+            <constructor-arg value="pu"></constructor-arg>
+        </bean>
+    </beans>
+</beans>
